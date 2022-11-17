@@ -11,6 +11,9 @@ import javafx.scene.transform.Affine;
 import javafx.scene.transform.Transform;
 
 public class PannableCanvas extends Pane {
+    
+    private double[] xPoints = new double[3];
+    private double[] yPoints = new double[3];
 
     DoubleProperty myScale = new SimpleDoubleProperty(1.0);
 
@@ -75,8 +78,14 @@ public class PannableCanvas extends Pane {
         double c = arrowSize;
         double a = c / 2.0;
         double b = Math.sqrt(Math.pow(c, 2) - Math.pow(a, 2));
-        double[] xPoints = new double[]{d, d - b, d - b};
-        double[] yPoints = new double[]{0, a, -a};
+       // double[] xPoints = new double[]{d, d - b, d - b};
+       // double[] yPoints = new double[]{0, a, -a};
+        xPoints[0] = d;
+        xPoints[1] = d-b;
+        xPoints[2] = d-b;
+        yPoints[0] = 0.0;
+        yPoints[1] = a;
+        yPoints[2] = -a;
         int nPoints = 3;
 
         // Set Sudut rotasi berdasarkan arah
@@ -102,7 +111,7 @@ public class PannableCanvas extends Pane {
         // MENGGAMBAR PANAH
         gc.save();
         Transform transform = Transform.translate(xc, yc);
-        transform = transform.createConcatenation(transform.rotate(sudutRotasi, 0, 0));
+        transform = transform.createConcatenation(Transform.rotate(sudutRotasi, 0, 0));
         gc.setTransform(new Affine(transform));
         if (arah == 0) {
             gc.fillOval(-d2, -d2, d, d);
